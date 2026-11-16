@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' blob:; object-src 'none'; base-uri 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emule</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="keymap/keymap.css">
+</head>
+<body>
+  <!-- ============================== Tela inicial ============================== -->
+  <main id="start-screen" class="screen">
+    <header class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>
+      </div>
+      <div>
+        <h1>Emule</h1>
+        <p class="subtitle">Espelhamento Android de baixa latência</p>
+      </div>
+      <span class="version" id="version"></span>
+    </header>
+
+    <div id="banner" class="banner" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+      <span id="banner-text"></span>
+      <button class="icon-btn small" id="banner-close" title="Fechar" aria-label="Fechar">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="start-grid">
+      <section class="card" id="devices-card">
+        <div class="card-head">
+          <h2>Dispositivos</h2>
+          <span class="pill" id="device-count">0</span>
+        </div>
+        <ul id="device-list" class="device-list" role="listbox" aria-label="Dispositivos conectados"></ul>
+        <div id="device-empty" class="empty">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 22v-3"/></svg>
+          <h3>Nenhum celular encontrado</h3>
+          <ol>
+            <li>No celular, abra <b>Configurações → Sobre o telefone</b> e toque 7 vezes em <b>Número da versão</b> para ativar as <b>Opções do desenvolvedor</b>.</li>
+            <li>Em <b>Opções do desenvolvedor</b>, ative a <b>Depuração USB</b>.</li>
+            <li>Conecte o cabo USB e aceite o pedido de <b>depuração USB</b> que aparece no celular.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="card" id="settings-card">
+        <div class="card-head"><h2>Qualidade</h2></div>
+
+        <label class="field">
+          <span>Predefinição</span>
+          <select id="quality-preset">
+            <option value="max">Máxima qualidade</option>
+            <option value="balanced">Equilibrado</option>
+            <option value="performance">Desempenho</option>
+            <option value="custom">Personalizado</option>
+          </select>
+        </label>
+        <p class="hint" id="preset-desc"></p>
+
+        <details id="advanced">
+          <summary>Avançado</summary>
+          <div class="adv-grid">
+            <label class="field">
+              <span>Resolução máxima</span>
+              <select id="opt-maxSize">
+                <option value="0">Nativa</option>
+                <option value="2560">2560</option>
+                <option value="1920">1920</option>
+                <option value="1600">1600</option>
+                <option value="1280">1280</option>
+                <option value="1024">1024</option>
+                <option value="800">800</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Taxa de bits (Mbps)</span>
+              <input type="number" id="opt-bitrate" min="1" max="100" step="1">
+            </label>
+            <label class="field">
+              <span>FPS máximo</span>
+              <select id="opt-maxFps">
+                <option value="0">Sem limite</option>
+                <option value="120">120</option>
+                <option value="90">90</option>
+                <option value="60">60</option>
+                <option value="30">30</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Codec de vídeo</span>
+              <select id="opt-codec">
+                <option value="h264">H.264</option>
+                <option value="h265">H.265 (HEVC)</option>
+              </select>
+            </label>
+          </div>
+          <label class="check"><input type="checkbox" id="opt-stayAwake"><span>Manter o celular acordado</span></label>
+          <label class="check"><input type="checkbox" id="opt-turnScreenOff"><span>Desligar a tela do celular ao conectar</span></label>
+          <label class="check"><input type="checkbox" id="opt-showTouches"><span>Mostrar toques no celular</span></label>
+          <label class="check"><input type="checkbox" id="opt-powerOffOnClose"><span>Desligar a tela do celular ao desconectar</span></label>
+        </details>
+
+        <div class="divider"></div>
+        <label class="check"><input type="checkbox" id="opt-audio"><span>Áudio do celular no PC <small>(Android 11+)</small></span></label>
+        <label class="check"><input type="checkbox" id="opt-autoConnect"><span>Conectar automaticamente</span></label>
+
+        <button id="connect-btn" class="primary" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+          <span>Conectar</span>
+        </button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ============================== Espelhamento ============================== -->
+  <main id="mirror-screen" class="screen" hidden>
+    <div id="video-area">
+      <canvas id="video"></canvas>
+      <div id="keymap-overlay"></div>
+      <div id="hud" hidden></div>
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <span id="loading-text">Conectando…</span>
+      </div>
+    </div>
+
+    <aside id="toolbar" aria-label="Barra de ferramentas">
+      <button class="tb" data-action="back" title="Voltar (botão direito)"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="tb" data-action="home" title="Início (botão do meio)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg></button>
+      <button class="tb" data-action="recents" title="Recentes"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/></svg></button>
+      <div class="tb-sep"></div>
+      <button class="tb" data-action="volup" title="Volume + (celular)"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9v6M14 12h6"/></svg></button>
+      <button class="tb" data-action="voldown" title="Volume − (celular)"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M15 12h6"/></svg></button>
+      <button class="tb" data-action="power" title="Botão liga/desliga"><svg viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M6.6 7.5a7 7 0 1 0 10.8 0"/></svg></button>
+      <button class="tb" data-action="rotate" title="Girar tela"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg></button>
+      <button class="tb" data-action="notifications" title="Notificações"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></button>
+      <button class="tb" data-action="screenshot" title="Captura de tela"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>
+      <button class="tb" data-action="apk" title="Instalar APK"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 19h14"/></svg></button>
+      <button class="tb" data-action="screenoff" title="Desligar tela do celular (o espelhamento continua)"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M4 4l16 16"/></svg></button>
+      <div class="tb-sep"></div>
+      <button class="tb" data-action="fullscreen" title="Tela cheia (F11)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      <button class="tb" data-action="ontop" title="Sempre no topo"><svg viewBox="0 0 24 24"><path d="M9 4h6l-1 6 3 3H7l3-3z"/><path d="M12 13v7"/></svg></button>
+      <button class="tb" data-action="pcvolume" title="Volume do áudio no PC"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+      <div class="tb-sep"></div>
+      <button class="tb" data-action="keymap" title="Mapeamento de teclas ON/OFF (F12 ou Ctrl+K)"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h1M9.5 10h1M13 10h1M16.5 10h1M7 14h10"/></svg></button>
+      <button class="tb" data-action="editkeymap" title="Editar mapeamento (Ctrl+Shift+E)"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button>
+      <button class="tb" data-action="profile" title="Perfil de mapeamento"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7M9 8h3"/></svg></button>
+      <div class="tb-spacer"></div>
+      <button class="tb" data-action="stats" title="Estatísticas (Ctrl+Shift+H)"><svg viewBox="0 0 24 24"><path d="M5 20V12M10 20V6M15 20v-9M20 20V4"/></svg></button>
+      <button class="tb" data-action="help" title="Atalhos (F1)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17v.5"/></svg></button>
+      <button class="tb danger" data-action="disconnect" title="Desconectar"><svg viewBox="0 0 24 24"><path d="M9 4H5v16h4"/><path d="M14 8l4 4-4 4M18 12H9"/></svg></button>
+    </aside>
+
+    <!-- popovers -->
+    <div id="pop-volume" class="popover" hidden>
+      <h4>Áudio no PC</h4>
+      <div class="row">
+        <button class="icon-btn" id="mute-btn" title="Silenciar"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="wave" d="M16.5 8.5a5 5 0 0 1 0 7"/><path class="x" d="M16 9l5 6M21 9l-5 6"/></svg></button>
+        <input type="range" id="volume-slider" min="0" max="100" step="1">
+        <span id="volume-value" class="mono">100%</span>
+      </div>
+      <p class="hint" id="audio-status"></p>
+    </div>
+
+    <div id="pop-profile" class="popover" hidden>
+      <h4>Perfil de mapeamento</h4>
+      <select id="profile-select"></select>
+      <div class="btn-grid">
+        <button id="profile-new">Novo</button>
+        <button id="profile-edit">Editar</button>
+        <button id="profile-import">Importar</button>
+        <button id="profile-export">Exportar</button>
+        <button id="profile-delete" class="danger">Excluir</button>
+      </div>
+      <p class="hint" id="profile-hint"></p>
+    </div>
+
+    <div id="pop-help" class="popover wide" hidden>
+      <h4>Atalhos</h4>
+      <table class="shortcuts">
+        <tr><td><kbd>Botão esquerdo</kbd></td><td>Toque / arrastar</td></tr>
+        <tr><td><kbd>Botão direito</kbd></td><td>Voltar (liga a tela se estiver apagada)</td></tr>
+        <tr><td><kbd>Botão do meio</kbd></td><td>Início</td></tr>
+        <tr><td><kbd>Botões laterais</kbd></td><td>Recentes / Notificações</td></tr>
+        <tr><td><kbd>Roda do mouse</kbd></td><td>Rolar</td></tr>
+        <tr><td><kbd>Digitação</kbd></td><td>Texto enviado ao celular</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>V</kbd></td><td>Colar texto do PC no celular</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>X</kbd></td><td>Copiar / recortar no celular (vai para o PC)</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Voltar (ou sai do modo mira)</td></tr>
+        <tr><td><kbd>F11</kbd></td><td>Tela cheia</td></tr>
+        <tr><td><kbd>F12</kbd> ou <kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Liga/desliga o mapeamento de teclas</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></td><td>Editar mapeamento</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd></td><td>Estatísticas</td></tr>
+        <tr><td><kbd>F1</kbd></td><td>Esta ajuda</td></tr>
+      </table>
+      <p class="hint">Com o mapeamento ligado, as teclas do perfil viram toques; as demais continuam digitando no celular. A tecla de mira do perfil ativa o modo mira (cursor oculto).</p>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
