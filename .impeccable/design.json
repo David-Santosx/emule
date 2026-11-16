@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-16T19:30:00Z",
+  "title": "Design System: Emule",
+  "scope": "Website only: docs/index.html (GitHub Pages, pt-BR). The desktop app UI in src/renderer is a separate, older system and is out of scope.",
+  "extensions": {
+    "colorMeta": {
+      "input-green": { "role": "primary", "displayName": "Input Green", "canonical": "#22c55e", "tonalRamp": ["#062b13", "#0b4520", "#11622e", "#17813c", "#1ea34c", "#22c55e", "#6ee39a", "#c9f5d9"] },
+      "input-green-hover": { "role": "primary", "displayName": "Input Green Hover", "canonical": "#3ddc77", "tonalRamp": ["#082f17", "#0e4d26", "#156c36", "#1d8d46", "#28b058", "#3ddc77", "#86eaab", "#d3f8e1"] },
+      "input-ink": { "role": "primary", "displayName": "Input Ink", "canonical": "#062b13", "tonalRamp": ["#021208", "#041e0d", "#062b13", "#0b4520", "#11622e", "#1ea34c", "#6ee39a", "#c9f5d9"] },
+      "time-yellow": { "role": "secondary", "displayName": "Time Yellow", "canonical": "#f2e600", "tonalRamp": ["#2a2800", "#4a4600", "#6e6900", "#958e00", "#c2b900", "#f2e600", "#f8ef6a", "#fcf8c6"] },
+      "ground": { "role": "neutral", "displayName": "Ground", "canonical": "#121212", "tonalRamp": ["#0a0a0a", "#121212", "#1c1c1b", "#2a2a28", "#3a3a37", "#5e5d58", "#a9a89f", "#e9e8e2"] },
+      "stock": { "role": "neutral", "displayName": "Frame Stock", "canonical": "#1c1c1b", "tonalRamp": ["#0d0d0d", "#121212", "#1c1c1b", "#242422", "#3a3a37", "#5e5d58", "#a9a89f", "#e9e8e2"] },
+      "stock-raised": { "role": "neutral", "displayName": "Raised Stock", "canonical": "#242422", "tonalRamp": ["#0d0d0d", "#1c1c1b", "#242422", "#2f2f2c", "#3a3a37", "#5e5d58", "#a9a89f", "#e9e8e2"] },
+      "film": { "role": "neutral", "displayName": "Film", "canonical": "#0d0d0d", "tonalRamp": ["#050505", "#0d0d0d", "#121212", "#1c1c1b", "#3a3a37", "#5e5d58", "#a9a89f", "#e9e8e2"] },
+      "rule": { "role": "neutral", "displayName": "Rule", "canonical": "#3a3a37", "tonalRamp": ["#121212", "#1c1c1b", "#2a2a28", "#3a3a37", "#4c4c48", "#6a6964", "#a9a89f", "#e9e8e2"] },
+      "overexposed-white": { "role": "neutral", "displayName": "Overexposed White", "canonical": "#e9e8e2", "tonalRamp": ["#1c1c1b", "#3a3a37", "#5e5d58", "#8d8c84", "#a9a89f", "#c9c8c0", "#e9e8e2", "#f7f6f2"] },
+      "dim": { "role": "neutral", "displayName": "Dim", "canonical": "#a9a89f", "tonalRamp": ["#1c1c1b", "#3a3a37", "#5e5d58", "#8d8c84", "#a9a89f", "#c9c8c0", "#e9e8e2", "#f7f6f2"] },
+      "faint": { "role": "neutral", "displayName": "Faint", "canonical": "#8d8c84", "tonalRamp": ["#1c1c1b", "#3a3a37", "#5e5d58", "#8d8c84", "#a9a89f", "#c9c8c0", "#e9e8e2", "#f7f6f2"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The single hero headline on the caption plate. Uppercase, balanced wrap." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles, uppercase, max 18ch. Closing call uses clamp(2.4rem,6vw,4.4rem)/0.92; one-frame ruler clamp(1.9rem,3.6vw,2.8rem)/0.95." },
+      "title": { "displayName": "Title", "purpose": "Frame names, how-to step titles, active-frame caption, sub-heads, wordmark. Uppercase, 800, 1.3-1.7rem." },
+      "body": { "displayName": "Body", "purpose": "Running text in Archivo. Ledes 56ch, captions 60ch, notes and FAQ 70ch. Emphasis is 600 in Overexposed White." },
+      "label": { "displayName": "Label / Burn-in", "purpose": "Burn-ins, ruler captions, requirement labels, keycap legends. Uppercase, tabular numerals." },
+      "measurement": { "displayName": "Measurement", "purpose": "Measured values in the measurement log, always Time Yellow." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "frame-cut", "value": "opacity 0.14s steps(2)", "purpose": "Caption change when a frame is selected; a cut, not a fade. Only under prefers-reduced-motion: no-preference." },
+      { "name": "frame-develop", "value": "opacity 0.1s steps(2), filter 0.1s steps(2)", "purpose": "Frame diagram switching between greyscale 42% and full colour. Only under prefers-reduced-motion: no-preference." }
+    ],
+    "breakpoints": [
+      { "name": "xs", "value": "480px" },
+      { "name": "sm", "value": "600px" },
+      { "name": "measure-reflow", "value": "700px" },
+      { "name": "strip-scroll", "value": "760px" },
+      { "name": "nav-hide", "value": "860px" },
+      { "name": "md", "value": "900px" },
+      { "name": "howto-2col", "value": "980px" },
+      { "name": "caption-drop", "value": "1060px" }
+    ],
+    "focus": { "value": "outline: 2px solid #f2e600; outline-offset: 3px", "purpose": "Global :focus-visible ring. The only non-measurement use of Time Yellow (with text selection and the skip link)." }
+  },
+  "components": [
+    {
+      "name": "Download Button",
+      "kind": "button",
+      "refersTo": "button-download-large",
+      "description": "The only filled button: the download action, always green.",
+      "html": "<a class=\"ds-get\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"square\"/></svg>Baixar Emule.exe</a>",
+      "css": ".ds-get{display:inline-flex;align-items:center;gap:10px;background:#22c55e;color:#062b13;font:700 1.08rem/1.6 'Archivo','Segoe UI',system-ui,sans-serif;text-decoration:none;padding:16px 24px;border-radius:2px;white-space:nowrap;min-height:44px} .ds-get svg{width:22px;height:22px;display:block} .ds-get:hover{background:#3ddc77;color:#062b13} .ds-get:focus-visible{outline:2px solid #f2e600;outline-offset:3px}"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "top-bar",
+      "description": "Sticky bar: wordmark, dim section links, compact green download.",
+      "html": "<header class=\"ds-bar\"><a class=\"ds-mark\" href=\"#\">Emule</a><nav><a href=\"#\">Medidas</a><a href=\"#\">Como usar</a><a href=\"#\">Atalhos</a><a href=\"#\">Dúvidas</a></nav><a class=\"ds-get-sm\" href=\"#\">Baixar</a></header>",
+      "css": ".ds-bar{display:flex;align-items:center;gap:24px;height:60px;padding:0 24px;background:rgba(18,18,18,.95);border-bottom:1px solid #3a3a37;font-family:'Archivo','Segoe UI',system-ui,sans-serif} .ds-mark{font:800 1.6rem/1 'Big Shoulders Display',Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase;color:#e9e8e2;text-decoration:none} .ds-bar nav{display:flex;gap:22px;margin-left:auto} .ds-bar nav a{color:#a9a89f;text-decoration:none;font-size:.95rem} .ds-bar nav a:hover{color:#e9e8e2} .ds-bar a:focus-visible{outline:2px solid #f2e600;outline-offset:3px} .ds-get-sm{background:#22c55e;color:#062b13;font-weight:700;text-decoration:none;padding:10px 16px;border-radius:2px;min-height:44px;display:inline-flex;align-items:center} .ds-get-sm:hover{background:#3ddc77}"
+    },
+    {
+      "name": "Frame",
+      "kind": "custom",
+      "refersTo": "frame-selected",
+      "description": "Signature: a square of film stock with burn-ins, crop marks when selected, and a name bar. Doubles as a tab.",
+      "html": "<div class=\"ds-strip\"><button class=\"ds-frame\" aria-selected=\"true\"><span class=\"ds-pic\"><svg viewBox=\"0 0 200 200\"><rect x=\"50\" y=\"28\" width=\"104\" height=\"144\" rx=\"12\" fill=\"none\" stroke=\"#e9e8e2\" stroke-width=\"2\"/><rect x=\"59\" y=\"40\" width=\"86\" height=\"120\" rx=\"3\" fill=\"#e9e8e2\" opacity=\".92\"/><circle cx=\"120\" cy=\"112\" r=\"7\" fill=\"#22c55e\"/><circle cx=\"120\" cy=\"112\" r=\"16\" fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2.2\"/></svg><span class=\"ds-burn ds-top\"><span>QD 03/05</span><span>Celular</span></span><span class=\"ds-burn ds-bot\"><span>Tela</span><span class=\"ds-v\">60 fps</span></span><span class=\"ds-crop\"></span></span><span class=\"ds-name\">Toque</span></button><button class=\"ds-frame\" aria-selected=\"false\"><span class=\"ds-pic\"><svg viewBox=\"0 0 200 200\"><rect x=\"36\" y=\"40\" width=\"128\" height=\"128\" fill=\"none\" stroke=\"#e9e8e2\" stroke-width=\"2\"/></svg><span class=\"ds-burn ds-top\"><span>QD 04/05</span><span>Decodifica</span></span><span class=\"ds-burn ds-bot\"><span>Fila</span><span class=\"ds-v\">0 quadros</span></span><span class=\"ds-crop\"></span></span><span class=\"ds-name\">Decodifica</span></button></div>",
+      "css": ".ds-strip{display:grid;grid-template-columns:repeat(2,minmax(0,180px));background:#0d0d0d;padding:12px} .ds-frame{position:relative;appearance:none;background:#1c1c1b;color:inherit;border:0;border-right:1px solid #0d0d0d;padding:0;text-align:left;cursor:pointer;display:flex;flex-direction:column} .ds-pic{position:relative;aspect-ratio:1/1;display:block} .ds-pic svg{width:100%;height:100%;display:block;opacity:.42;filter:grayscale(1) contrast(.85);transition:opacity .1s steps(2),filter .1s steps(2)} .ds-frame:hover .ds-pic svg{opacity:.75} .ds-frame[aria-selected=true]{background:#242422} .ds-frame[aria-selected=true] .ds-pic svg{opacity:1;filter:none} .ds-burn{position:absolute;left:10px;right:10px;display:flex;justify-content:space-between;font:400 .72rem/1.2 'Share Tech Mono',ui-monospace,Consolas,monospace;letter-spacing:.04em;text-transform:uppercase;font-variant-numeric:tabular-nums;color:#e9e8e2} .ds-top{top:9px} .ds-bot{bottom:9px;color:#a9a89f} .ds-v{color:#f2e600} .ds-crop{position:absolute;inset:6px;opacity:0;background:linear-gradient(#a9a89f,#a9a89f) top left/10px 1px no-repeat,linear-gradient(#a9a89f,#a9a89f) top left/1px 10px no-repeat,linear-gradient(#a9a89f,#a9a89f) top right/10px 1px no-repeat,linear-gradient(#a9a89f,#a9a89f) top right/1px 10px no-repeat,linear-gradient(#a9a89f,#a9a89f) bottom left/10px 1px no-repeat,linear-gradient(#a9a89f,#a9a89f) bottom left/1px 10px no-repeat,linear-gradient(#a9a89f,#a9a89f) bottom right/10px 1px no-repeat,linear-gradient(#a9a89f,#a9a89f) bottom right/1px 10px no-repeat} .ds-frame[aria-selected=true] .ds-crop{opacity:1} .ds-name{padding:10px 12px 13px;border-top:1px solid #0d0d0d;font:800 1.3rem/1 'Big Shoulders Display',Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em;color:#a9a89f} .ds-frame[aria-selected=true] .ds-name{color:#e9e8e2} .ds-frame:focus-visible{outline:2px solid #f2e600;outline-offset:3px}"
+    },
+    {
+      "name": "Film Edge and Playhead",
+      "kind": "custom",
+      "description": "Yellow ms ruler under the strip; a one-frame-wide bar marks the current frame.",
+      "html": "<div class=\"ds-edge\"><svg viewBox=\"0 0 1000 22\" preserveAspectRatio=\"none\"><path d=\"M0 11H1000M0 3v16M200 6v10M400 6v10M600 6v10M800 6v10M1000 3v16\" stroke=\"#f2e600\" fill=\"none\" stroke-width=\"1.2\"/><rect x=\"400\" y=\"2\" width=\"200\" height=\"4\" fill=\"#f2e600\"/></svg><div class=\"ds-osd\"><span>Posição no filme</span><span>Quadro 3 de 5</span></div></div>",
+      "css": ".ds-edge{background:#0d0d0d;padding:8px 12px 14px} .ds-edge svg{width:100%;height:22px;display:block} .ds-osd{display:flex;justify-content:space-between;margin-top:2px;font:400 .72rem/1.4 'Share Tech Mono',ui-monospace,Consolas,monospace;letter-spacing:.04em;text-transform:uppercase;font-variant-numeric:tabular-nums;color:#a9a89f}"
+    },
+    {
+      "name": "Measurement Log",
+      "kind": "custom",
+      "refersTo": "measurement-value",
+      "description": "Ruled rows: stage, measured value in yellow mono, dim explanation.",
+      "html": "<table class=\"ds-log\"><tbody><tr><th scope=\"row\">Conectar</th><td class=\"ds-mv\">1,2 s</td><td class=\"ds-n\">Do clique em Conectar até a sessão aberta no celular.</td></tr><tr><th scope=\"row\">Fila do decodificador</th><td class=\"ds-mv\">0</td><td class=\"ds-n\">Cada quadro é desenhado assim que chega.</td></tr></tbody></table>",
+      "css": ".ds-log{width:100%;border-collapse:collapse;font:400 1.0625rem/1.6 'Archivo','Segoe UI',system-ui,sans-serif;color:#e9e8e2;font-variant-numeric:tabular-nums} .ds-log th,.ds-log td{padding:14px 0;border-bottom:1px solid #3a3a37;vertical-align:baseline;text-align:left} .ds-log th{font-weight:500;padding-right:20px} .ds-mv{font:400 clamp(1.3rem,2.4vw,1.75rem)/1 'Share Tech Mono',ui-monospace,Consolas,monospace;color:#f2e600;white-space:nowrap;padding-right:24px} .ds-n{color:#a9a89f;font-size:.95rem;width:46%}"
+    },
+    {
+      "name": "How-to Frames",
+      "kind": "card",
+      "refersTo": "howto-frame",
+      "description": "Setup steps as frames of stock joined by 1px rule gutters, each with a burn-in.",
+      "html": "<ol class=\"ds-howto\"><li><span class=\"ds-hburn\"><span>Passo 1/4</span><span>Celular</span></span><h3>Libere o modo desenvolvedor</h3><p>Em <b>Configurações › Sobre o telefone</b>, toque 7 vezes em <b>Número de compilação</b>.</p></li><li><span class=\"ds-hburn\"><span>Passo 2/4</span><span>Celular</span></span><h3>Ative a depuração USB</h3><p>Em <b>Opções do desenvolvedor</b>, ligue <b>Depuração USB</b>.</p></li></ol>",
+      "css": ".ds-howto{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:#3a3a37;border:1px solid #3a3a37;font-family:'Archivo','Segoe UI',system-ui,sans-serif} .ds-howto li{background:#1c1c1b;padding:52px 20px 24px;position:relative} .ds-hburn{position:absolute;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;font:400 .74rem/1.2 'Share Tech Mono',ui-monospace,Consolas,monospace;letter-spacing:.04em;text-transform:uppercase;color:#a9a89f} .ds-howto h3{font:800 1.5rem/1.02 'Big Shoulders Display',Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;margin:0 0 10px;color:#e9e8e2} .ds-howto p{margin:0;color:#a9a89f;font-size:.97rem;line-height:1.6} .ds-howto b{color:#e9e8e2;font-weight:600}"
+    },
+    {
+      "name": "Keycap",
+      "kind": "chip",
+      "refersTo": "keycap",
+      "description": "Inline key glyph with a 3px bottom edge.",
+      "html": "<span class=\"ds-keys\"><kbd class=\"ds-kbd\">Ctrl</kbd><kbd class=\"ds-kbd\">Shift</kbd><kbd class=\"ds-kbd\">H</kbd></span>",
+      "css": ".ds-keys{display:inline-flex;gap:4px} .ds-kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.9em;padding:0 .45em;font:400 .8rem/1 'Share Tech Mono',ui-monospace,Consolas,monospace;color:#e9e8e2;background:#242422;border:1px solid #3a3a37;border-bottom-width:3px;border-radius:4px;text-transform:uppercase}"
+    },
+    {
+      "name": "FAQ Row",
+      "kind": "custom",
+      "description": "Native disclosure between 1px rules; summary turns green on hover.",
+      "html": "<div class=\"ds-faq\"><details open><summary>É um emulador?</summary><p>Não. O jogo roda no seu celular de verdade; o PC mostra a tela e manda os toques pelo cabo.</p></details><details><summary>Não sai som no PC</summary><p>O áudio do celular no PC precisa de Android 11 ou mais novo.</p></details></div>",
+      "css": ".ds-faq{border-top:1px solid #3a3a37;font-family:'Archivo','Segoe UI',system-ui,sans-serif;color:#e9e8e2} .ds-faq details{border-bottom:1px solid #3a3a37} .ds-faq summary{list-style:none;cursor:pointer;padding:18px 40px 18px 0;position:relative;font-weight:600;font-size:1.08rem} .ds-faq summary::-webkit-details-marker{display:none} .ds-faq summary::after{content:'';position:absolute;right:4px;top:50%;width:12px;height:12px;margin-top:-8px;border-right:1.6px solid #a9a89f;border-bottom:1.6px solid #a9a89f;transform:rotate(45deg)} .ds-faq details[open] summary::after{transform:rotate(225deg);margin-top:-2px} .ds-faq summary:hover{color:#22c55e} .ds-faq summary:focus-visible{outline:2px solid #f2e600;outline-offset:3px} .ds-faq p{margin:0 0 20px;color:#a9a89f;max-width:70ch;line-height:1.6}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Latency Test Footage",
+    "overview": "The site is a slow-motion latency test filmed frame by frame. Surfaces are footage-grey film stock separated by hard 1px rules; information is burned into the frames the way a high-speed camera overlays timecode, in an uppercase monospaced video-overlay face. One input travels mouse, USB, phone, decode, PC screen across a strip of five frames, and a yellow playhead walks a ruler underneath it. The page has no imagery beyond line-drawn diagrams; the phone's pixels are an overexposed off-white.\n\nColour is rationed by role, not by decoration. Everything is greyscale except two signals: yellow means time and measurement, green means input. Because each colour carries one meaning, a reader can tell at a glance that a yellow number was measured and that a green thing is something they (or their mouse) do. The voice is direct and technical: real ms, fps and Hz, nothing unmeasured.\n\nMotion is a cut, not a tween. Frames change state in hard steps like scrubbing footage, and under reduced motion they change instantly.",
+    "keyCharacteristics": [
+      "Footage-grey film stock on a near-black ground; depth by tone, never by shadow.",
+      "Burned-in OSD text (frame number, stage, measured value) on frames and steps.",
+      "Yellow is time and measurement; green is the input event and the download action.",
+      "Square geometry with 1px rules, corner crop marks on the selected frame.",
+      "Condensed uppercase display headlines over a neutral grotesque body.",
+      "Frame-step motion (`steps(2)` cuts), gated by `prefers-reduced-motion`."
+    ],
+    "rules": [
+      { "name": "The Two Signals Rule", "body": "Yellow means time or a measured value; green means input or the download action. Nothing else gets colour. A number in yellow must be a real measurement; a decorative highlight in either colour breaks the code. Keyboard focus is the single sanctioned exception for yellow.", "section": "colors" },
+      { "name": "The Green Is the Action Rule", "body": "The only filled button on the site is the green download. Secondary actions are plain underlined links in white.", "section": "colors" },
+      { "name": "The Burned-In Rule", "body": "Burn-ins carry frame data (position like \"QD 01/05\" or \"Passo 1/4\", the stage, a measured value) and are set in the mono label style. They never restate or introduce the heading below them.", "section": "typography" },
+      { "name": "The Mono Means Machine Rule", "body": "Share Tech Mono is reserved for what the camera or the app would print: labels, keys, numbers. Prose is never set in it.", "section": "typography" },
+      { "name": "The Tone-Not-Shadow Rule", "body": "A surface rises by moving one step lighter in the grey ramp, never by casting a shadow. The keycap's 3px bottom border is the only bevel, and it belongs to the keycap alone.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** reserve Time Yellow for measured values, rulers, the playhead and keyboard focus.",
+      "**Do** reserve Input Green for input events (click, touch point, mouse updates) and the download action.",
+      "**Do** separate everything with 1px Rule lines and step surfaces by grey tone (Film, Frame Stock, Raised Stock).",
+      "**Do** set burn-ins, labels, keys and numbers in Share Tech Mono, uppercase, tabular numerals.",
+      "**Do** move between states with hard cuts (`steps(2)`, 0.1–0.14s) and drop them under `prefers-reduced-motion`.",
+      "**Do** label illustrated frames as illustration and keep every number a real measurement."
+    ],
+    "donts": [
+      "**Don't** use colour gradients, glows or drop shadows; the world is flat footage (solid single-colour `linear-gradient` fills that draw the crop marks are a drawing technique, not a gradient).",
+      "**Don't** colour anything yellow or green for decoration or emphasis.",
+      "**Don't** build cards with icon tiles or a floating phone mockup; content lives in frames and ruled rows.",
+      "**Don't** round corners beyond the button (2px) and keycap (4px).",
+      "**Don't** tween state changes with easing curves; cut between frames.",
+      "**Don't** apply this system to the desktop app's UI in `src/renderer`, which has its own older look."
+    ]
+  }
+}
