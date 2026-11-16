@@ -3,405 +3,455 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Emule — Espelhe seu Android no PC e jogue com teclado e mouse</title>
-<meta name="description" content="Emule espelha a tela do celular Android no PC via USB com latência muito baixa, toca o áudio do celular no PC e mapeia teclado e mouse para jogos.">
-<meta name="theme-color" content="#0b0d10">
-<meta property="og:title" content="Emule — Android no PC com baixa latência">
-<meta property="og:description" content="Espelhamento via USB, áudio do celular no PC e mapeamento de teclado/mouse para jogos.">
-<meta property="og:image" content="assets/icon.png">
+<title>Emule: o Android no PC, do clique ao pixel</title>
+<meta name="description" content="Emule espelha o Android no Windows pelo cabo USB com latência muito baixa, toca o áudio do celular no PC e transforma teclado e mouse em toques. Grátis.">
+<meta name="theme-color" content="#121212">
+<meta property="og:title" content="Emule: o Android no PC, do clique ao pixel">
+<meta property="og:description" content="Espelhamento via USB, áudio do celular no PC e mapeamento de teclado e mouse para jogos. Grátis para Windows.">
+<meta property="og:image" content="https://david-santosx.github.io/emule/assets/icon.png">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=Big+Shoulders+Display:wght@700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0d10;--bg2:#11151a;--card:#151a20;--line:#232a33;--text:#e8ecf1;--muted:#a3adba;--acc:#22c55e;--acc2:#0e7a3a;--grad:linear-gradient(135deg,#22c55e,#0e7a3a);--r:14px}
+:root{
+  --ground:#121212; --stock:#1c1c1b; --stock2:#242422; --film:#0d0d0d; --rule:#3a3a37;
+  --white:#e9e8e2; --dim:#a9a89f; --faint:#8d8c84;
+  --time:#f2e600; --input:#22c55e; --input-ink:#062b13;
+  --display:"Big Shoulders Display",Impact,sans-serif;
+  --body:"Archivo","Segoe UI",system-ui,sans-serif;
+  --osd:"Share Tech Mono",ui-monospace,Consolas,monospace;
+  --gut:clamp(16px,4vw,40px); --max:1240px;
+}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,"Segoe UI",system-ui,-apple-system,sans-serif;overflow-x:hidden}
-img,svg{max-width:100%;display:block}
-a{color:var(--acc)}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-.skip{position:absolute;left:-999px;top:8px;background:var(--acc);color:#05230f;padding:8px 12px;border-radius:8px;z-index:20}
-.skip:focus{left:8px}
-/* nav */
-header.nav{position:sticky;top:0;z-index:10;background:rgba(11,13,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:800;font-size:1.15rem;letter-spacing:-.01em}
-.brand img{width:30px;height:30px;border-radius:8px}
-.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
-.nav ul a{color:var(--muted);text-decoration:none;font-size:.92rem;font-weight:500}
-.nav ul a:hover{color:var(--text)}
-@media(max-width:820px){.nav ul{display:none}}
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 22px;border-radius:12px;font-weight:700;text-decoration:none;font-size:1rem;transition:transform .15s,box-shadow .15s,background .15s;border:1px solid transparent}
-.btn svg{width:20px;height:20px;flex:none}
-.btn-p{background:var(--grad);color:#fff;box-shadow:0 8px 28px -8px rgba(34,197,94,.55);text-shadow:0 1px 1px rgba(0,0,0,.25)}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 34px -8px rgba(34,197,94,.7)}
-.btn-s{background:var(--card);color:var(--text);border-color:var(--line)}
-.btn-s:hover{border-color:#3a4552;transform:translateY(-2px)}
-.btn-sm{padding:8px 14px;font-size:.88rem;border-radius:10px}
-/* hero */
-.hero{position:relative;padding:72px 0 56px;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:-30% -10% auto;height:620px;background:radial-gradient(closest-side,rgba(34,197,94,.18),transparent 70%);pointer-events:none}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1.02fr 1fr;gap:48px;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid #1f5133;background:rgba(34,197,94,.08);color:#86efac;border-radius:99px;font-size:.82rem;font-weight:600}
-.pill i{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:pulse 2.4s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
-h1{font-size:clamp(2.3rem,5.4vw,3.9rem);line-height:1.05;letter-spacing:-.035em;margin:18px 0 16px;font-weight:800}
-h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-image:linear-gradient(135deg,#4ade80,#22c55e 50%,#16a34a)}
-.lead{font-size:1.14rem;color:var(--muted);max-width:540px;margin:0 0 28px}
-.ctas{display:flex;flex-wrap:wrap;gap:12px}
-.meta{margin-top:18px;color:var(--muted);font-size:.86rem}
-.stats{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
-.stats b{display:block;font-size:1.35rem;color:var(--text);letter-spacing:-.02em}
-.stats span{font-size:.8rem;color:var(--muted)}
-@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:40px}.hero{padding-top:48px}}
-/* illustration */
-.ill{position:relative;animation:float 7s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-8px)}}
-.win{background:#0f1318;border:1px solid #27303a;border-radius:14px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8),0 0 0 1px rgba(34,197,94,.06);overflow:hidden}
-.bar{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#141920;border-bottom:1px solid #222a33;font-size:.78rem;color:var(--muted)}
-.bar img{width:16px;height:16px;border-radius:4px}
-.bar .dots{margin-left:auto;display:flex;gap:12px;color:#5b6674}
-.stage{display:flex;gap:10px;padding:14px;align-items:stretch}
-.tools{display:flex;flex-direction:column;gap:7px;padding:6px;background:#141920;border-radius:10px;border:1px solid #222a33}
-.tools i{width:22px;height:22px;border-radius:6px;background:#1d242d;display:block}
-.tools i.on{background:rgba(34,197,94,.25);box-shadow:inset 0 0 0 1px rgba(34,197,94,.6)}
-.phone{flex:1;position:relative;aspect-ratio:2340/1080;border-radius:20px;background:#05070a;border:3px solid #2a323c;padding:6px;min-width:0}
-.screen{position:relative;width:100%;height:100%;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,#173a2a 0%,#0f2a3a 45%,#1e1630 100%)}
-.screen svg.scene{position:absolute;inset:0;width:100%;height:100%}
-.k{position:absolute;transform:translate(-50%,-50%);font-size:clamp(9px,1.45vw,12px);font-weight:700;color:#eafff1;background:rgba(10,30,18,.72);border:1.5px solid rgba(74,222,128,.85);border-radius:8px;padding:3px 7px;white-space:nowrap;box-shadow:0 0 14px rgba(34,197,94,.35)}
-.k.round{border-radius:50%;width:2.6em;height:2.6em;display:grid;place-items:center;padding:0}
-.joy{position:absolute;left:17%;top:68%;width:24%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px dashed rgba(74,222,128,.7);background:radial-gradient(circle,rgba(34,197,94,.18),transparent 70%)}
-.joy .k{left:50%;top:50%}
-.joy em{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:#4ade80;animation:joy 4s ease-in-out infinite}
-@keyframes joy{0%,100%{transform:translate(0,0)}25%{transform:translate(0,-22px)}50%{transform:translate(18px,-10px)}75%{transform:translate(-16px,4px)}}
-.aim{position:absolute;left:66%;top:44%;width:52px;height:52px;transform:translate(-50%,-50%)}
-.aim svg{width:100%;height:100%}
-.hud{position:absolute;right:8px;top:8px;font:600 9px/1.35 ui-monospace,Consolas,monospace;color:#bbf7d0;background:rgba(0,0,0,.55);padding:4px 6px;border-radius:6px}
-.mouse{position:absolute;right:-14px;bottom:-22px;width:62px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.6))}
-.badge{position:absolute;left:-10px;bottom:-30px;background:#0f1318;border:1px solid #27303a;border-radius:12px;padding:8px 12px;font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.badge b{color:#86efac}
-@media(max-width:520px){.mouse{width:44px;right:-4px}.badge{position:static;margin-top:14px;display:inline-flex}.hud{display:none}.aim{width:38px;height:38px}.tools{display:none}}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:72px;scrollbar-color:var(--rule) var(--ground)}
+body{margin:0;background:var(--ground);color:var(--white);font:400 1.0625rem/1.6 var(--body);caret-color:var(--input)}
+::selection{background:var(--time);color:#121212}
+::-webkit-scrollbar{width:12px;height:12px}::-webkit-scrollbar-track{background:var(--ground)}::-webkit-scrollbar-thumb{background:var(--rule);border:3px solid var(--ground)}
+a{color:var(--white);text-underline-offset:.22em;text-decoration-thickness:1px}
+a:hover{color:var(--input)}
+:focus-visible{outline:2px solid var(--time);outline-offset:3px}
+svg{display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.osd{font-family:var(--osd);letter-spacing:.04em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.skip{position:absolute;left:-9999px;top:8px;z-index:30;background:var(--time);color:#121212;padding:8px 12px;font-weight:700}
+.skip:focus{left:8px}.skip:hover{color:#121212}
+kbd{display:inline-grid;place-items:center;min-width:1.9em;height:1.9em;padding:0 .45em;font:400 .8rem/1 var(--osd);color:var(--white);background:var(--stock2);border:1px solid var(--rule);border-bottom-width:3px;border-radius:4px;text-transform:uppercase}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(18,18,18,.95);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:24px;height:60px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 1.6rem/1 var(--display);letter-spacing:.02em;text-transform:uppercase}
+.mark img{width:28px;height:28px}
+.bar nav{display:flex;gap:22px;margin-left:auto}
+.bar nav a{text-decoration:none;color:var(--dim);font-size:.95rem}
+.bar nav a:hover{color:var(--white)}
+.get{display:inline-flex;align-items:center;gap:10px;background:var(--input);color:var(--input-ink);font-weight:700;text-decoration:none;padding:10px 16px;border-radius:2px;white-space:nowrap;min-height:44px}
+.get:hover{color:var(--input-ink);background:#3ddc77}
+.get svg{width:18px;height:18px}
+@media(max-width:860px){.bar nav{display:none}.bar .get{margin-left:auto}}
+
+/* footage block: caption plate + frames + edge, one piece of film */
+.footage{background:var(--film);border-bottom:1px solid var(--rule)}
+.plate{max-width:var(--max);margin:0 auto;padding:clamp(22px,3.4vw,38px) var(--gut) clamp(18px,2.6vw,28px);display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:16px 48px;align-items:end}
+h1{font:900 clamp(2.7rem,6.4vw,5rem)/.9 var(--display);text-transform:uppercase;letter-spacing:-.005em;margin:0;text-wrap:balance}
+.lede{max-width:56ch;color:var(--dim);font-size:clamp(1rem,1.4vw,1.1rem);margin:0}
+.lede strong{color:var(--white);font-weight:600}
+@media(max-width:900px){.plate{grid-template-columns:1fr}}
+
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:var(--max);margin:0 auto;padding:0 var(--gut);outline-offset:-2px}
+.frame{position:relative;appearance:none;background:var(--stock);color:inherit;border:0;border-right:1px solid var(--film);padding:0;text-align:left;cursor:pointer;font:inherit;display:flex;flex-direction:column}
+.frame:last-child{border-right:0}
+.frame .pic{position:relative;aspect-ratio:1/1}
+.frame .pic svg{width:100%;height:100%;opacity:.42;filter:grayscale(1) contrast(.85)}
+.frame[aria-selected="true"]{background:var(--stock2)}
+.frame[aria-selected="true"] .pic svg{opacity:1;filter:none}
+.frame:hover .pic svg{opacity:.75}
+.frame .burn{position:absolute;left:10px;right:10px;font-size:.72rem;display:flex;justify-content:space-between;pointer-events:none;color:var(--white)}
+.frame .burn.top{top:9px}
+.frame .burn.bot{bottom:9px;color:var(--dim)}
+.frame .burn .v{color:var(--time)}
+.crop{position:absolute;inset:6px;pointer-events:none;opacity:0;
+  background:
+   linear-gradient(var(--dim),var(--dim)) top left/10px 1px no-repeat,linear-gradient(var(--dim),var(--dim)) top left/1px 10px no-repeat,
+   linear-gradient(var(--dim),var(--dim)) top right/10px 1px no-repeat,linear-gradient(var(--dim),var(--dim)) top right/1px 10px no-repeat,
+   linear-gradient(var(--dim),var(--dim)) bottom left/10px 1px no-repeat,linear-gradient(var(--dim),var(--dim)) bottom left/1px 10px no-repeat,
+   linear-gradient(var(--dim),var(--dim)) bottom right/10px 1px no-repeat,linear-gradient(var(--dim),var(--dim)) bottom right/1px 10px no-repeat}
+.frame[aria-selected="true"] .crop{opacity:1}
+.frame .name{padding:10px 12px 13px;border-top:1px solid var(--film);font:800 1.3rem/1 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--dim)}
+.frame[aria-selected="true"] .name{color:var(--white)}
+.ink{stroke:var(--white);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ink2{stroke:var(--dim);fill:none;stroke-width:1.4;stroke-linecap:round}
+.inkf{fill:var(--white)}
+.go{stroke:var(--input);fill:none;stroke-width:2.2;stroke-linecap:round}
+.gof{fill:var(--input)}
+.ms{stroke:var(--time);fill:none;stroke-width:1.2}
+.msf{fill:var(--time)}
+
+/* the strip's yellow edge: frame position */
+.edge{max-width:var(--max);margin:0 auto;padding:0 var(--gut) 14px}
+.edge svg{width:100%;height:22px}
+.edge .osd{display:flex;justify-content:space-between;font-size:.72rem;color:var(--dim);margin-top:2px}
+
+/* action + caption */
+.take{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.25fr);gap:18px 32px;align-items:center;padding:22px 0;border-bottom:1px solid var(--rule)}
+.take .get{padding:16px 24px;font-size:1.08rem}
+.take .get svg{width:22px;height:22px}
+.meta{color:var(--dim);font-size:.92rem;line-height:1.5;margin:0}
+.meta a{color:var(--white)}
+.caption{border-left:1px solid var(--rule);padding-left:28px;min-height:6.2em}
+.caption h2{font:800 clamp(1.35rem,2vw,1.7rem)/1.05 var(--display);text-transform:uppercase;margin:0 0 6px;letter-spacing:.01em}
+.caption p{margin:0;color:var(--dim);font-size:.97rem;max-width:60ch}
+.steps{display:flex;align-items:center;gap:6px;margin-top:10px;color:var(--faint);font-size:.78rem}
+.steps button{appearance:none;background:none;border:0;padding:0;cursor:pointer;min-width:44px;min-height:44px;display:grid;place-items:center;color:inherit}
+@media(prefers-reduced-motion:no-preference){
+  .frame .pic svg{transition:opacity .1s steps(2),filter .1s steps(2)}
+  .caption.cut{animation:cut .14s steps(2)}
+  @keyframes cut{0%{opacity:0}100%{opacity:1}}
+}
+@media(max-width:600px){.take{grid-template-columns:1fr!important}.take .get{justify-self:start}}
+@media(max-width:1060px){.take{grid-template-columns:auto 1fr}.caption{grid-column:1/-1;border-left:0;border-top:1px solid var(--rule);padding:18px 0 0}}
+
+/* one-frame ruler */
+.frameruler{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(24px,4vw,56px);align-items:center;padding:clamp(36px,5vw,56px) 0 clamp(56px,8vw,96px)}
+.frameruler h2{font:900 clamp(1.9rem,3.6vw,2.8rem)/.95 var(--display);text-transform:uppercase;margin:0 0 10px}
+.frameruler p{margin:0;color:var(--dim);max-width:52ch}
+.frameruler p b{color:var(--white);font-weight:600}
+.frameruler .osd{font-size:.76rem;color:var(--dim);display:grid;grid-template-columns:auto 1fr auto;gap:12px;text-align:center}
+.frameruler .osd span:first-child{text-align:left}.frameruler .osd span:last-child{text-align:right}
+.frameruler .osd .v{color:var(--time)}
+.frameruler svg{width:100%;height:auto;margin:8px 0}
+@media(max-width:900px){.frameruler{grid-template-columns:1fr}}
+@media(max-width:480px){.frameruler .osd,.edge .osd{font-size:.7rem;gap:8px;letter-spacing:.01em}}
+
 /* sections */
-section{padding:72px 0;scroll-margin-top:60px}
-.alt{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.eyebrow{color:var(--acc);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}
-h2{font-size:clamp(1.7rem,3.4vw,2.4rem);letter-spacing:-.025em;line-height:1.15;margin:8px 0 12px}
-.sub{color:var(--muted);max-width:640px;margin:0 0 36px}
-.grid{display:grid;gap:18px}
-.g4{grid-template-columns:repeat(4,1fr)}
-.g2{grid-template-columns:1fr 1fr}
-@media(max-width:980px){.g4{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.g4,.g2{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:border-color .2s,transform .2s}
-.card:hover{border-color:#2f4a3a;transform:translateY(-3px)}
-.ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:rgba(34,197,94,.12);color:var(--acc);margin-bottom:14px}
-.ic svg{width:22px;height:22px}
-.card h3{margin:0 0 6px;font-size:1.08rem}
-.card p{margin:0;color:var(--muted);font-size:.94rem}
-.card ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:.9rem}
-.card ul li{margin:3px 0}
-.num{font-size:1.9rem;font-weight:800;letter-spacing:-.03em;color:var(--text)}
-.num small{font-size:.9rem;color:var(--muted);font-weight:600}
-/* keymap */
-.km{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
-@media(max-width:900px){.km{grid-template-columns:1fr}}
-.feat{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.feat li{display:flex;gap:14px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:12px}
-.feat li>span{flex:none;width:30px;height:30px;border-radius:8px;background:var(--grad);display:grid;place-items:center;font-weight:800;color:#fff;font-size:.82rem}
-.feat b{display:block;margin-bottom:2px}
-.feat p{margin:0;color:var(--muted);font-size:.92rem}
-kbd{font:600 .82em ui-monospace,Consolas,monospace;background:#1d242d;border:1px solid #333e4a;border-bottom-width:2px;border-radius:6px;padding:1px 6px;color:var(--text);white-space:nowrap}
-.aimbox{background:linear-gradient(180deg,#132019,#121820);border:1px solid #234532;border-radius:var(--r);padding:24px}
-.aimbox h3{margin:0 0 8px;font-size:1.25rem}
-.aimbox p{color:var(--muted);margin:0 0 14px;font-size:.95rem}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0;list-style:none}
-.chips li{font-size:.82rem;padding:5px 10px;border-radius:99px;background:#1a222b;border:1px solid #2a3440;color:#cfd8e2}
-.sens{display:grid;gap:10px;margin-top:4px}
-.sens label{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
-.track{height:6px;border-radius:9px;background:#222b35;overflow:hidden}
-.track i{display:block;height:100%;background:var(--grad);border-radius:9px}
-/* steps */
-.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-@media(max-width:980px){.steps{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.steps{grid-template-columns:1fr}}
-.steps li{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 18px}
-.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;margin-bottom:12px}
-.steps h3{margin:0 0 6px;font-size:1rem}
-.steps p{margin:0;color:var(--muted);font-size:.9rem}
-.note{margin-top:20px;color:var(--muted);font-size:.9rem}
-/* table */
-.tbl{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.tbl th,.tbl td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);font-size:.94rem;vertical-align:top}
-.tbl th{background:#181e25;color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
-.tbl tr:last-child td{border-bottom:0}
-.tbl td:first-child{white-space:nowrap;width:1%}
-@media(max-width:560px){.tbl td:first-child{white-space:normal}.tbl th,.tbl td{padding:10px 12px}}
-.req li{margin:6px 0}
+section.cut{border-top:1px solid var(--rule);padding:clamp(56px,8vw,104px) 0}
+.head{display:flex;align-items:baseline;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin-bottom:clamp(24px,3.5vw,40px)}
+h2.big{font:900 clamp(2.2rem,5vw,3.6rem)/.95 var(--display);text-transform:uppercase;margin:0;max-width:18ch;text-wrap:balance}
+.head .aside{color:var(--dim);font-size:.95rem;margin:0}
+
+/* measurement log */
+.log{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.log th,.log td{padding:14px 0;border-bottom:1px solid var(--rule);vertical-align:baseline;text-align:left}
+.log th{font-weight:500;color:var(--white);padding-right:20px}
+.log td.v{font:400 clamp(1.3rem,2.4vw,1.75rem)/1 var(--osd);color:var(--time);white-space:nowrap;padding-right:24px}
+.log td.n{color:var(--dim);font-size:.95rem;width:46%}
+.note{color:var(--faint);font-size:.9rem;margin:16px 0 0;max-width:70ch}
+@media(max-width:700px){.log tr{display:grid;grid-template-columns:1fr auto}.log th{padding-bottom:4px}.log td.n{grid-column:1/-1;width:auto;padding-top:0}}
+
+/* how-to frames */
+.howto{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.howto li{background:var(--stock);padding:52px 20px 24px;position:relative;min-height:15rem}
+.howto .burn{position:absolute;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;font-size:.74rem;color:var(--dim)}
+.howto h3{font:800 1.5rem/1.02 var(--display);text-transform:uppercase;margin:0 0 10px;letter-spacing:.01em}
+.howto p{margin:0;color:var(--dim);font-size:.97rem}
+.howto p b{color:var(--white);font-weight:600}
+.warn{margin-top:22px;color:var(--dim);font-size:.95rem;max-width:75ch}
+.warn b{color:var(--white);font-weight:600}
+
+/* shortcuts + requirements */
+.two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,6vw,80px)}
+.keys-t{width:100%;border-collapse:collapse}
+.keys-t td{padding:11px 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+.keys-t td:first-child{width:44%;white-space:nowrap;padding-right:12px}
+.keys-t td:last-child{color:var(--dim)}
+.keys-t kbd+kbd{margin-left:4px}
+h3.sub{font:800 1.35rem/1 var(--display);text-transform:uppercase;margin:0 0 14px;letter-spacing:.02em}
+.req{list-style:none;margin:0;padding:0}
+.req li{padding:11px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:7.5rem 1fr;gap:12px}
+.req li span:first-child{color:var(--faint);font:400 .8rem/1.9 var(--osd);text-transform:uppercase}
+
 /* faq */
-.faq{display:grid;gap:10px;max-width:820px}
-details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 18px}
-details[open]{border-color:#2f4a3a}
-summary{cursor:pointer;list-style:none;padding:16px 28px 16px 0;font-weight:600;position:relative}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";position:absolute;right:0;top:12px;font-size:1.4rem;color:var(--acc);transition:transform .2s}
-details[open] summary::after{transform:rotate(45deg)}
-details p{margin:0 0 16px;color:var(--muted);font-size:.95rem}
-/* cta + footer */
-.cta{text-align:center;background:radial-gradient(600px 240px at 50% 0,rgba(34,197,94,.16),transparent),var(--bg2);border-top:1px solid var(--line)}
-.cta .ctas{justify-content:center}
-.credits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media(max-width:760px){.credits{grid-template-columns:1fr}}
-.credits .card p{font-size:.88rem}
-footer{padding:30px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}
-footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
-footer a{color:var(--muted)}
-footer a:hover{color:var(--text)}
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
-.reveal.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+.faq{border-top:1px solid var(--rule)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 40px 18px 0;position:relative;font-weight:600;font-size:1.08rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:4px;top:50%;width:12px;height:12px;margin-top:-8px;border-right:1.6px solid var(--dim);border-bottom:1.6px solid var(--dim);transform:rotate(45deg)}
+.faq details[open] summary::after{transform:rotate(225deg);margin-top:-2px}
+.faq summary:hover{color:var(--input)}
+.faq p{margin:0 0 20px;color:var(--dim);max-width:70ch}
+
+/* close + footer */
+.close{border-top:1px solid var(--rule);padding:clamp(56px,8vw,96px) 0}
+.close .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px}
+.close h2{font:900 clamp(2.4rem,6vw,4.4rem)/.92 var(--display);text-transform:uppercase;margin:0;max-width:13ch}
+.close .get{padding:16px 24px;font-size:1.08rem}
+footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--faint);font-size:.9rem}
+footer .wrap{display:grid;gap:10px}
+footer p{margin:0}
+footer a{color:var(--dim)}
+
+@media(max-width:980px){.howto{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:0;scrollbar-width:none}
+  .strip::-webkit-scrollbar{display:none}
+  .frame{flex:0 0 74%;scroll-snap-align:center}
+  .frame:first-child{margin-left:var(--gut)}.frame:last-child{margin-right:var(--gut)}
+  .howto{grid-template-columns:1fr}
+  .howto li{min-height:0}
+}
 </style>
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-<header class="nav">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="scene" viewBox="0 0 1000 200">
+    <path class="ink2" d="M0 172H1000"/>
+    <g transform="translate(0 -24)"><path class="ink" d="M100 70c-24 0-38 16-38 40v34c0 24 16 38 38 38s38-14 38-38v-34c0-24-14-40-38-40Z"/>
+    <path class="ink" d="M100 70v40M62 110h76"/></g>
+    <path class="ink" d="M100 46C100 38 130 34 170 34H330c40 0 52 6 60 30l14 44c6 18 14 24 34 24h12"/>
+    <rect class="ink" x="318" y="22" width="44" height="24" rx="6"/>
+    <rect class="ink" x="450" y="28" width="104" height="144" rx="12"/>
+    <rect class="inkf" x="459" y="40" width="86" height="120" rx="3" opacity=".92"/>
+    <path d="M468 150l20-26 14 15 12-18 19 29Z" fill="#121212" opacity=".35"/>
+    <circle cx="502" cy="84" r="9" fill="#121212" opacity=".35"/>
+    <path class="ink2" d="M554 104H626" stroke-dasharray="3 7"/>
+    <rect class="ink" x="636" y="40" width="128" height="128"/>
+    <path class="ink2" d="M668 40v128M700 40v128M732 40v128M636 72h128M636 104h128M636 136h128"/>
+    <rect class="inkf" x="636" y="40" width="64" height="64" opacity=".9"/><rect class="inkf" x="700" y="72" width="32" height="32" opacity=".9"/>
+    <path class="ink2" d="M764 104H822" stroke-dasharray="3 7"/>
+    <rect class="ink" x="822" y="40" width="168" height="106" rx="4"/>
+    <path class="ink" d="M890 146v26M868 172h44"/>
+    <rect class="inkf" x="834" y="52" width="144" height="82" opacity=".92"/>
+    <path d="M846 124l26-30 18 18 16-22 24 34Z" fill="#121212" opacity=".35"/>
+    <g transform="translate(0 -24)"><path class="gof" d="M66 108c0-20 12-34 32-36v36Z" opacity=".95"/>
+    <circle class="go" cx="82" cy="86" r="24" opacity=".5"/></g>
+    <circle class="gof" cx="250" cy="34" r="7"/><circle class="go" cx="250" cy="34" r="15" opacity=".45"/>
+    <circle class="gof" cx="520" cy="112" r="7"/><circle class="go" cx="520" cy="112" r="16"/>
+    <rect class="gof" x="732" y="104" width="32" height="32"/>
+    <circle class="gof" cx="952" cy="96" r="6"/><circle class="go" cx="952" cy="96" r="13"/>
+  </symbol>
+</svg>
+
+<header class="bar">
   <div class="wrap">
-    <a class="brand" href="#"><img src="assets/icon.png" alt="" width="30" height="30">Emule</a>
-    <nav aria-label="Seções"><ul>
-      <li><a href="#recursos">Recursos</a></li>
-      <li><a href="#mapeamento">Mapeamento</a></li>
-      <li><a href="#como-usar">Como usar</a></li>
-      <li><a href="#atalhos">Atalhos</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul></nav>
-    <a class="btn btn-p btn-sm" href="https://github.com/David-Santosx/emule/releases/latest">Baixar</a>
+    <a class="mark" href="#topo" aria-label="Emule, início"><img src="assets/icon.png" alt="" width="28" height="28">Emule</a>
+    <nav aria-label="Seções">
+      <a href="#medidas">Medidas</a>
+      <a href="#como-usar">Como usar</a>
+      <a href="#atalhos">Atalhos</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a href="https://github.com/David-Santosx/emule">GitHub</a>
+    </nav>
+    <a class="get" href="https://github.com/David-Santosx/emule/releases/latest/download/Emule.exe">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg>Baixar</a>
   </div>
 </header>
 
 <main id="conteudo">
-<section class="hero" aria-labelledby="titulo">
-  <div class="wrap">
+<div class="footage" id="topo">
+  <div class="plate">
+    <h1>Do clique ao pixel, quadro a quadro</h1>
+    <p class="lede">O Emule espelha o Android no PC <strong>pelo cabo USB</strong>, toca o <strong>áudio do celular no PC</strong> e transforma <strong>teclado e mouse em toques</strong>. O jogo roda no seu celular de verdade, sem emulador.</p>
+  </div>
+
+  <div class="strip" role="tablist" aria-label="O caminho de um clique, em 5 quadros">
+    <button class="frame" role="tab" aria-controls="cap" aria-selected="true" data-i="0">
+      <span class="pic"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#scene" width="1000" height="200"/></svg>
+        <span class="burn top osd"><span>QD 01/05</span><span>Entrada</span></span>
+        <span class="burn bot osd"><span>Mouse</span><span class="v">1000 Hz</span></span><span class="crop"></span></span>
+      <span class="name">Clique</span>
+    </button>
+    <button class="frame" role="tab" aria-controls="cap" aria-selected="false" tabindex="-1" data-i="1">
+      <span class="pic"><svg viewBox="200 0 200 200" aria-hidden="true"><use href="#scene" width="1000" height="200"/></svg>
+        <span class="burn top osd"><span>QD 02/05</span><span>Cabo</span></span>
+        <span class="burn bot osd"><span>USB</span><span class="v">a cada 4 ms</span></span><span class="crop"></span></span>
+      <span class="name">USB</span>
+    </button>
+    <button class="frame" role="tab" aria-controls="cap" aria-selected="false" tabindex="-1" data-i="2">
+      <span class="pic"><svg viewBox="400 0 200 200" aria-hidden="true"><use href="#scene" width="1000" height="200"/></svg>
+        <span class="burn top osd"><span>QD 03/05</span><span>Celular</span></span>
+        <span class="burn bot osd"><span>Tela</span><span class="v">60 fps</span></span><span class="crop"></span></span>
+      <span class="name">Toque</span>
+    </button>
+    <button class="frame" role="tab" aria-controls="cap" aria-selected="false" tabindex="-1" data-i="3">
+      <span class="pic"><svg viewBox="600 0 200 200" aria-hidden="true"><use href="#scene" width="1000" height="200"/></svg>
+        <span class="burn top osd"><span>QD 04/05</span><span>Decodifica</span></span>
+        <span class="burn bot osd"><span>Fila</span><span class="v">0 quadros</span></span><span class="crop"></span></span>
+      <span class="name">Decodifica</span>
+    </button>
+    <button class="frame" role="tab" aria-controls="cap" aria-selected="false" tabindex="-1" data-i="4">
+      <span class="pic"><svg viewBox="800 0 200 200" aria-hidden="true"><use href="#scene" width="1000" height="200"/></svg>
+        <span class="burn top osd"><span>QD 05/05</span><span>Tela do PC</span></span>
+        <span class="burn bot osd"><span>Quadro</span><span class="v">16,7 ms</span></span><span class="crop"></span></span>
+      <span class="name">Pixel</span>
+    </button>
+  </div>
+  <div class="edge" aria-hidden="true">
+    <svg viewBox="0 0 1000 22" preserveAspectRatio="none">
+      <path class="ms" d="M0 11H1000M0 3v16M200 6v10M400 6v10M600 6v10M800 6v10M1000 3v16"/>
+      <rect class="msf" id="playhead" x="0" y="2" width="200" height="4"/>
+    </svg>
+    <div class="osd"><span>Posição no filme</span><span id="pos">Quadro 1 de 5</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="take">
+    <a class="get" id="dl" href="https://github.com/David-Santosx/emule/releases/latest/download/Emule.exe">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg>Baixar Emule.exe</a>
+    <p class="meta">Grátis · Windows 10/11, 64 bits · Android 5+.<br>Portátil, abre sem instalar. Prefere instalar? <a href="https://github.com/David-Santosx/emule/releases/latest">Instalador e zip</a>.</p>
+    <div class="caption" id="cap" role="tabpanel" aria-live="polite">
+      <h2 id="cap-h">O mouse é lido a até 1000 vezes por segundo</h2>
+      <p id="cap-p">O Emule lê o mouse cru, sem a aceleração do Windows, e manda a posição ao celular a cada 4 ms. Os movimentos pequenos chegam inteiros.</p>
+      <div class="steps osd"><button type="button" id="prev" aria-label="Quadro anterior"><kbd>←</kbd></button><button type="button" id="next" aria-label="Próximo quadro"><kbd>→</kbd></button><span>passa os quadros</span></div>
+    </div>
+  </div>
+
+  <div class="frameruler">
     <div>
-      <span class="pill"><i></i>Grátis · Windows 10/11 · Android 5.0+</span>
-      <h1 id="titulo">Seu Android no PC, <span class="g">sem atraso.</span></h1>
-      <p class="lead">O Emule espelha a tela do celular no computador via cabo USB com latência muito baixa, toca o áudio do celular no PC e transforma teclado e mouse em toques para você jogar no celular de verdade.</p>
-      <div class="ctas">
-        <a class="btn btn-p" href="https://github.com/David-Santosx/emule/releases/latest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></svg>Baixar para Windows</a>
-        <a class="btn btn-s" href="https://github.com/David-Santosx/emule"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>Código no GitHub</a>
-      </div>
-      <p class="meta">Versão portátil (<code>Emule.exe</code>) ou instalador. adb já incluso — não precisa instalar nada no celular.</p>
-      <div class="stats" aria-label="Medições em um Galaxy A25">
-        <div><b>~1,2 s</b><span>para conectar</span></div>
-        <div><b>~1,6 s</b><span>até o 1º quadro</span></div>
-        <div><b>até 60 fps</b><span>em 1080×2340</span></div>
-        <div><b>25–60 ms</b><span>buffer de áudio</span></div>
-      </div>
+      <h2>Um quadro do celular, cinco do mouse</h2>
+      <p>A tela do celular a 60 fps troca de imagem a cada <b>16,7 ms</b>. Nesse tempo, o Emule já mandou <b>5 atualizações do mouse</b>: as barras verdes.</p>
     </div>
+    <figure style="margin:0">
+      <div class="osd"><span class="v">0 ms</span><span>1 quadro a 60 fps</span><span class="v">16,7 ms</span></div>
+      <svg viewBox="0 0 400 54" role="img" aria-label="Régua de 0 a 16,7 milissegundos com cinco envios do mouse, a cada 4 milissegundos">
+        <path class="ms" d="M1 6v42M399 6v42M1 27h398"/>
+        <path class="ms" d="M25 20v14M49 20v14M73 20v14M97 20v14M121 20v14M145 20v14M169 20v14M193 20v14M217 20v14M241 20v14M265 20v14M289 20v14M313 20v14M337 20v14M361 20v14M385 20v14" opacity=".5"/>
+        <g class="gof"><rect x="0" y="12" width="3" height="30"/><rect x="95" y="12" width="3" height="30"/><rect x="190" y="12" width="3" height="30"/><rect x="286" y="12" width="3" height="30"/><rect x="382" y="12" width="3" height="30"/></g>
+      </svg>
+    </figure>
+  </div>
+</div>
 
-    <div class="ill" role="img" aria-label="Ilustração: janela do Emule no PC mostrando a tela de um celular deitado com rótulos de teclas mapeadas (WASD, Espaço, R, mira com o mouse)">
-      <div class="win">
-        <div class="bar"><img src="assets/icon.png" alt="">Emule — Galaxy A25<span class="dots" aria-hidden="true"><span>—</span><span>▢</span><span>✕</span></span></div>
-        <div class="stage">
-          <div class="tools" aria-hidden="true"><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
-          <div class="phone">
-            <div class="screen">
-              <svg class="scene" viewBox="0 0 234 108" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M0 70 L40 52 L80 62 L120 40 L160 56 L200 44 L234 58 V108 H0Z" fill="#0d2419" opacity=".9"/>
-                <path d="M0 84 L60 72 L120 80 L180 68 L234 78 V108 H0Z" fill="#081a12"/>
-                <rect x="150" y="34" width="10" height="20" fill="#0a1d14"/><rect x="164" y="28" width="14" height="26" fill="#0a1d14"/>
-              </svg>
-              <span class="hud">60 fps · H.264<br>16 Mbps · fila 0</span>
-              <div class="joy"><em></em><span class="k">WASD</span></div>
-              <span class="k" style="left:17%;top:30%">⇧ Shift</span>
-              <div class="aim"><svg viewBox="0 0 52 52" fill="none" stroke="#4ade80" stroke-width="2"><circle cx="26" cy="26" r="16" stroke-dasharray="4 4"/><path d="M26 4v12M26 36v12M4 26h12M36 26h12"/><circle cx="26" cy="26" r="2.5" fill="#4ade80"/></svg></div>
-              <span class="k" style="left:66%;top:72%">Mira <kbd>'</kbd></span>
-              <span class="k" style="left:88%;top:62%">Espaço</span>
-              <span class="k round" style="left:86%;top:36%">R</span>
-              <span class="k round" style="left:52%;top:22%">G</span>
-              <span class="k" style="left:46%;top:84%">🖱 Esq.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <svg class="mouse" viewBox="0 0 60 90" aria-hidden="true"><defs><linearGradient id="mg" x1="0" x2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#0e7a3a"/></linearGradient></defs><rect x="3" y="3" width="54" height="84" rx="27" fill="#161c23" stroke="#33404d" stroke-width="2"/><path d="M30 3v30M3 33h54" stroke="#33404d" stroke-width="2"/><path d="M5 31V30A25 25 0 0 1 28 5v26Z" fill="url(#mg)" opacity=".85"/><rect x="27" y="12" width="6" height="12" rx="3" fill="#4ade80"/></svg>
-      <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Quadro na tela <b>assim que decodifica</b></div>
-    </div>
+<section class="cut" id="medidas" aria-labelledby="medidas-h">
+  <div class="wrap">
+    <div class="head"><h2 class="big" id="medidas-h">Só números medidos</h2><p class="aside">Galaxy A25 · Android 16 · cabo USB</p></div>
+    <table class="log">
+      <tbody>
+        <tr><th scope="row">Conectar</th><td class="v">1,2 s</td><td class="n">Do clique em Conectar até a sessão aberta no celular.</td></tr>
+        <tr><th scope="row">Primeiro quadro</th><td class="v">1,6 s</td><td class="n">Até a tela do celular aparecer no PC.</td></tr>
+        <tr><th scope="row">Imagem</th><td class="v">1080×2340</td><td class="n">Resolução nativa, até 60 fps, H.264 ou H.265 decodificado pela placa de vídeo.</td></tr>
+        <tr><th scope="row">Fila do decodificador</th><td class="v">0</td><td class="n">Cada quadro é desenhado assim que chega. Nada fica esperando.</td></tr>
+        <tr><th scope="row">Áudio do celular</th><td class="v">25–35 ms</td><td class="n">Buffer típico do som tocando no PC; chega a uns 60 ms nos picos. Precisa de Android 11 ou mais novo.</td></tr>
+        <tr><th scope="row">Mouse</th><td class="v">1000 → 250 Hz</td><td class="n">Lido na taxa do seu mouse e enviado a cada 4 ms, sem perder movimento.</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Medido com o Emule 1.0.0 num Samsung Galaxy A25. Outros celulares e PCs dão números diferentes; no app, <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>H</kbd> mostra os seus ao vivo.</p>
   </div>
 </section>
 
-<section id="recursos" class="alt" aria-labelledby="t-rec">
+<section class="cut" id="como-usar" aria-labelledby="como-h">
   <div class="wrap">
-    <span class="eyebrow">Destaques</span>
-    <h2 id="t-rec">Feito para jogar, não só para ver</h2>
-    <p class="sub">Usa o scrcpy-server v5.0.1 no celular com um cliente próprio, otimizado do começo ao fim para atraso mínimo.</p>
-    <div class="grid g4">
-      <article class="card reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
-        <h3>Latência</h3>
-        <p>Decodificação H.264/H.265 por hardware (WebCodecs). Cada quadro é desenhado na hora, sem buffer de vídeo. Entrada do mouse em 1 kHz bruto, enviada ao celular a ~250 Hz.</p>
-      </article>
-      <article class="card reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-        <h3>Qualidade</h3>
-        <p>Resolução nativa (1080×2340 no Galaxy A25) a até 60 fps. Três predefinições:</p>
-        <ul><li>Máxima qualidade</li><li>Equilibrado</li><li>Desempenho</li></ul>
-      </article>
-      <article class="card reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></div>
-        <h3>Áudio</h3>
-        <p>O som do celular sai no PC (Android 11+), com buffer de ~25–60 ms. Controle de volume e mudo direto na barra.</p>
-      </article>
-      <article class="card reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></div>
-        <h3>Mapeamento</h3>
-        <p>Teclado e mouse viram toques: joystick WASD, modo mira, deslizar, macros. Editor visual de arrastar e soltar e perfis prontos de FPS e MOBA.</p>
-      </article>
-    </div>
-    <div class="grid g4" style="margin-top:18px">
-      <div class="card reveal"><div class="num">~1,2 <small>s</small></div><p>para conectar</p></div>
-      <div class="card reveal"><div class="num">~1,6 <small>s</small></div><p>até o primeiro quadro</p></div>
-      <div class="card reveal"><div class="num">60 <small>fps</small></div><p>em 1080×2340</p></div>
-      <div class="card reveal"><div class="num">25–60 <small>ms</small></div><p>de buffer de áudio</p></div>
-    </div>
-    <p class="note">Medido em um Samsung Galaxy A25 via USB. Os números variam conforme o aparelho, o cabo e o PC.</p>
-  </div>
-</section>
-
-<section id="mapeamento" aria-labelledby="t-km">
-  <div class="wrap">
-    <span class="eyebrow">Teclado e mouse</span>
-    <h2 id="t-km">Mapeamento de teclas como em emulador — no seu celular de verdade</h2>
-    <p class="sub">Monte o perfil no editor visual: arraste cada controle para cima do botão do jogo, clique para escolher a tecla e salve. Os perfis são JSON e podem ser importados e exportados.</p>
-    <div class="km">
-      <ul class="feat">
-        <li class="reveal"><span>1</span><div><b>Toque e segurar</b><p>Apertou a tecla, o dedo encosta; soltou, ele levanta. Segurar vira toque longo.</p></div></li>
-        <li class="reveal"><span>2</span><div><b>Joystick WASD com tecla de correr</b><p>Quatro teclas viram um dedo no direcional, com diagonais normalizadas. Sem <kbd>Shift</kbd> vai a 75% do raio; segurando, a 100%.</p></div></li>
-        <li class="reveal"><span>3</span><div><b>Deslizar e macro</b><p>Um gesto de deslizar com duração ajustável, ou uma sequência de toques rápidos (multitap) em uma única tecla.</p></div></li>
-        <li class="reveal"><span>4</span><div><b>Qualquer tecla ou botão</b><p>Todas as teclas do teclado, botões do mouse (esquerdo, direito, meio e laterais) e a rodinha para cima/baixo. Uma mesma tecla pode acionar vários controles de uma vez.</p></div></li>
-        <li class="reveal"><span>5</span><div><b>Perfis de exemplo</b><p>FPS (Free Fire/PUBG/CODM) e MOBA (Mobile Legends/LoL WR) para começar — ajuste as posições para o seu jogo.</p></div></li>
-      </ul>
-      <div class="aimbox reveal">
-        <span class="eyebrow">Modo mira</span>
-        <h3>Câmera com o mouse, como no PC</h3>
-        <p>Ligue o modo mira e o cursor do Windows some (pointer lock): o movimento do mouse vira um dedo arrastando a câmera do jogo, que é reposicionado sozinho quando chega perto do limite. <kbd>Esc</kbd> sempre sai.</p>
-        <ul class="chips">
-          <li>Alternar ou segurar</li><li>Tecla configurável (padrão <kbd>'</kbd>)</li><li>Sensibilidade X e Y separadas</li><li>Inverter eixo Y</li><li>Botões “só no modo mira”</li><li>Mouse bruto 1 kHz → ~250 Hz</li>
-        </ul>
-        <div class="sens" aria-hidden="true">
-          <label>Sensibilidade X <span>1,0</span></label><div class="track"><i style="width:20%"></i></div>
-          <label>Sensibilidade Y <span>0,8</span></label><div class="track"><i style="width:16%"></i></div>
-        </div>
-        <p style="margin:14px 0 0;font-size:.86rem">Dica: com mouse de DPI alto (1600+), comece com sensibilidade ~0,4–0,6.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="como-usar" class="alt" aria-labelledby="t-uso">
-  <div class="wrap">
-    <span class="eyebrow">Como usar</span>
-    <h2 id="t-uso">Pronto em cinco passos</h2>
-    <p class="sub">Só na primeira vez. Depois é plugar o cabo e clicar em Conectar.</p>
-    <ol class="steps">
-      <li class="reveal"><h3>Opções do desenvolvedor</h3><p>Configurações › Sobre o telefone › Informações do software: toque 7 vezes em “Número de compilação”.</p></li>
-      <li class="reveal"><h3>Depuração USB</h3><p>Em Configurações › Opções do desenvolvedor, ative “Depuração USB”.</p></li>
-      <li class="reveal"><h3>Conecte o cabo</h3><p>Use um cabo USB de dados (não só de carga) e abra o Emule.</p></li>
-      <li class="reveal"><h3>Aceite o aviso</h3><p>No celular, permita a depuração USB e marque “Sempre permitir”.</p></li>
-      <li class="reveal"><h3>Conectar</h3><p>No Emule, selecione o celular e clique em <b>Conectar</b>.</p></li>
+    <div class="head"><h2 class="big" id="como-h">Do zero ao primeiro quadro</h2><p class="aside">Só na primeira vez</p></div>
+    <ol class="howto">
+      <li><span class="burn osd"><span>Passo 1/4</span><span>Celular</span></span><h3>Libere o modo desenvolvedor</h3><p>Em <b>Configurações › Sobre o telefone</b>, toque 7 vezes em <b>Número de compilação</b>.</p></li>
+      <li><span class="burn osd"><span>Passo 2/4</span><span>Celular</span></span><h3>Ative a depuração USB</h3><p>Em <b>Opções do desenvolvedor</b>, ligue <b>Depuração USB</b>.</p></li>
+      <li><span class="burn osd"><span>Passo 3/4</span><span>Cabo</span></span><h3>Conecte e permita</h3><p>Use um cabo de dados. No celular, aceite <b>Permitir depuração USB?</b> e marque <b>Sempre permitir</b>.</p></li>
+      <li><span class="burn osd"><span>Passo 4/4</span><span>PC</span></span><h3>Abra e conecte</h3><p>Abra o <b>Emule.exe</b>, escolha o celular na lista e clique em <b>Conectar</b>.</p></li>
     </ol>
-    <p class="note">Na barra lateral: voltar, início, recentes, volume, power, captura de tela, instalar APK, desligar a tela do celular, tela cheia e sempre no topo — além de um painel de estatísticas (FPS, latência, bitrate).</p>
+    <p class="warn">O Windows pode avisar <b>“O Windows protegeu o computador”</b>, porque o app não tem assinatura digital. Clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.</p>
   </div>
 </section>
 
-<section id="atalhos" aria-labelledby="t-at">
-  <div class="wrap grid g2" style="gap:36px">
-    <div>
-      <span class="eyebrow">Atalhos</span>
-      <h2 id="t-at">Teclas de atalho</h2>
-      <table class="tbl">
-        <thead><tr><th scope="col">Tecla</th><th scope="col">Ação</th></tr></thead>
-        <tbody>
-          <tr><td><kbd>F1</kbd></td><td>Ajuda / lista de atalhos</td></tr>
-          <tr><td><kbd>F11</kbd></td><td>Tela cheia</td></tr>
-          <tr><td><kbd>F12</kbd> ou <kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Liga/desliga o mapeamento de teclas</td></tr>
-          <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></td><td>Editor de mapeamento</td></tr>
-          <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd></td><td>Estatísticas (FPS, latência, bitrate)</td></tr>
-          <tr><td>Mouse</td><td>Esquerdo = toque/arrastar · direito = Voltar · meio = Início</td></tr>
-          <tr><td><kbd>'</kbd> / <kbd>Esc</kbd></td><td>Liga/desliga o modo mira (perfil FPS) / sai do modo mira</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div id="requisitos">
-      <span class="eyebrow">Requisitos</span>
-      <h2>O que você precisa</h2>
-      <div class="card">
-        <ul class="req" style="margin:0;padding-left:18px;color:var(--muted)">
-          <li><b style="color:var(--text)">PC:</b> Windows 10 ou 11, 64 bits (x64)</li>
-          <li><b style="color:var(--text)">Celular:</b> Android 5.0 ou superior</li>
-          <li><b style="color:var(--text)">Áudio no PC:</b> Android 11 ou superior</li>
-          <li><b style="color:var(--text)">Conexão:</b> cabo USB de dados e depuração USB ativada</li>
-          <li><b style="color:var(--text)">Instalação:</b> nenhuma no celular; adb já vem embutido no app</li>
-          <li><b style="color:var(--text)">Formatos:</b> <code>Emule.exe</code> portátil ou instalador com atalhos</li>
+<section class="cut" id="atalhos" aria-labelledby="atalhos-h">
+  <div class="wrap">
+    <div class="head"><h2 class="big" id="atalhos-h">Atalhos e requisitos</h2><p class="aside"><kbd>F1</kbd> abre a ajuda no app</p></div>
+    <div class="two">
+      <div>
+        <h3 class="sub">No app</h3>
+        <table class="keys-t">
+          <tbody>
+            <tr><td><kbd>F11</kbd></td><td>Tela cheia</td></tr>
+            <tr><td><kbd>F12</kbd> ou <kbd>Ctrl</kbd><kbd>K</kbd></td><td>Liga e desliga o mapeamento de teclas</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>E</kbd></td><td>Editor de mapeamento</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>H</kbd></td><td>Estatísticas: FPS, bitrate, fila, áudio</td></tr>
+            <tr><td><kbd>'</kbd> e <kbd>Esc</kbd></td><td>Liga o modo mira (perfil FPS de exemplo) e sai dele</td></tr>
+            <tr><td>Botão esquerdo</td><td>Toque e arrastar</td></tr>
+            <tr><td>Direito · meio</td><td>Voltar · Início</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 class="sub">Você precisa de</h3>
+        <ul class="req">
+          <li><span>PC</span><span>Windows 10 ou 11, 64 bits</span></li>
+          <li><span>Celular</span><span>Android 5.0 ou mais novo</span></li>
+          <li><span>Áudio</span><span>Android 11 ou mais novo</span></li>
+          <li><span>Cabo</span><span>USB de dados</span></li>
+          <li><span>No celular</span><span>Depuração USB ativada</span></li>
+          <li><span>Instalar</span><span>Nada: o adb já vem dentro do app</span></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="faq" class="alt" aria-labelledby="t-faq">
+<section class="cut" id="duvidas" aria-labelledby="duvidas-h">
   <div class="wrap">
-    <span class="eyebrow">FAQ</span>
-    <h2 id="t-faq">Perguntas frequentes</h2>
+    <div class="head"><h2 class="big" id="duvidas-h">Dúvidas</h2></div>
     <div class="faq">
-      <details><summary>O Windows mostrou “O Windows protegeu o computador”. É seguro?</summary><p>O aviso aparece porque o app não tem assinatura digital. Clique em <b>Mais informações → Executar assim mesmo</b>. O código-fonte está disponível no GitHub.</p></details>
-      <details><summary>O celular não aparece ou a conexão cai.</summary><p>Feche outros programas que usam adb (WASD+, emuladores, scrcpy, Vysor…): eles podem derrubar a conexão. Troque o cabo ou a porta USB e, se preciso, revogue as autorizações de depuração USB no celular e conecte de novo.</p></details>
-      <details><summary>Por que não tem som?</summary><p>O áudio do celular no PC exige Android 11 ou superior. Em versões anteriores o espelhamento e o mapeamento funcionam normalmente, só sem áudio.</p></details>
-      <details><summary>Os controles do perfil de exemplo não batem com o meu jogo.</summary><p>As posições dos perfis FPS e MOBA são genéricas. Abra o editor (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd>), arraste cada controle para cima do botão do jogo e salve.</p></details>
-      <details><summary>Posso tomar ban usando teclado e mouse em jogos online?</summary><p>O Emule só envia toques para a tela, como se fosse o seu dedo. Ainda assim, alguns jogos online e sistemas anticheat podem proibir ou detectar o uso de teclado/mouse ou macros. Verifique as regras do jogo — o uso e qualquer risco de banimento são de sua responsabilidade.</p></details>
-      <details><summary>Preciso instalar algo no celular?</summary><p>Não. O Emule envia o servidor do scrcpy temporariamente pelo adb a cada conexão. Basta ativar a depuração USB.</p></details>
+      <details><summary>É um emulador?</summary><p>Não. O jogo roda no seu celular de verdade; o PC mostra a tela e manda os toques pelo cabo. Seus jogos, contas e o desempenho são os do celular.</p></details>
+      <details><summary>Preciso instalar alguma coisa no celular?</summary><p>Não. A cada conexão o Emule copia para o celular, pelo adb, o servidor do scrcpy que captura a tela e o som. Basta a depuração USB estar ativada.</p></details>
+      <details><summary>O celular não aparece ou a conexão cai</summary><p>Feche outros programas que usam adb, como WASD+, emuladores, scrcpy ou Vysor. Troque o cabo ou a porta USB e, se precisar, revogue as autorizações de depuração USB no celular e conecte de novo.</p></details>
+      <details><summary>Não sai som no PC</summary><p>O áudio do celular no PC precisa de Android 11 ou mais novo. Em versões anteriores o espelhamento funciona, só sem som.</p></details>
+      <details><summary>Funciona com iPhone ou Wi-Fi?</summary><p>Não. O Emule é só para Android e só pelo cabo USB, que é o que mantém a latência baixa.</p></details>
+      <details><summary>Posso ser banido por usar mapeamento de teclas?</summary><p>Alguns jogos online proíbem teclado e mouse ou ferramentas de mapeamento nos termos de uso. Confira as regras do jogo; o risco é seu.</p></details>
     </div>
   </div>
 </section>
 
-<section aria-labelledby="t-cred">
+<section class="close" aria-labelledby="close-h">
   <div class="wrap">
-    <span class="eyebrow">Créditos</span>
-    <h2 id="t-cred">Construído sobre código aberto</h2>
-    <div class="credits">
-      <div class="card"><h3>scrcpy</h3><p>scrcpy-server v5.0.1, por Genymobile. Licença Apache-2.0.</p></div>
-      <div class="card"><h3>Android platform-tools (adb)</h3><p>Android Open Source Project. Licença Apache-2.0.</p></div>
-      <div class="card"><h3>Electron</h3><p>OpenJS Foundation e colaboradores. Licença MIT.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="cta" aria-labelledby="t-cta">
-  <div class="wrap">
-    <h2 id="t-cta">Bora jogar no PC com o seu celular?</h2>
-    <p class="sub" style="margin:0 auto 26px">Baixe a versão mais recente, conecte o cabo e pronto.</p>
-    <div class="ctas">
-      <a class="btn btn-p" href="https://github.com/David-Santosx/emule/releases/latest">Baixar o Emule</a>
-      <a class="btn btn-s" href="https://github.com/David-Santosx/emule">Código no GitHub</a>
-    </div>
+    <h2 id="close-h">Ligue o cabo. Jogue no PC.</h2>
+    <a class="get" href="https://github.com/David-Santosx/emule/releases/latest/download/Emule.exe">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg>Baixar Emule.exe</a>
   </div>
 </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© <span id="ano">2026</span> Emule. Não afiliado ao Google, Samsung ou Genymobile. Android é marca da Google LLC.</span>
-    <span><a href="https://github.com/David-Santosx/emule">GitHub</a> · <a href="https://github.com/David-Santosx/emule/releases/latest">Downloads</a> · <a href="#">Topo ↑</a></span>
+    <p>Emule é grátis. Código em <a href="https://github.com/David-Santosx/emule">github.com/David-Santosx/emule</a>.</p>
+    <p>Usa o servidor do <a href="https://github.com/Genymobile/scrcpy">scrcpy</a> (Genymobile, Apache-2.0), o adb do Android platform-tools (Apache-2.0) e o <a href="https://www.electronjs.org/">Electron</a> (MIT). Sem afiliação com Google, Samsung ou Genymobile. Android é marca do Google LLC.</p>
+    <p>Os quadros do topo são ilustrações; os números são medições reais.</p>
   </div>
 </footer>
 
 <script>
-document.getElementById('ano').textContent=new Date().getFullYear();
-(function(){var els=document.querySelectorAll('.reveal');
-if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(function(e){e.classList.add('in')});return}
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
-els.forEach(function(e){io.observe(e)});})();
+(function(){
+  var C=[
+    ["O mouse é lido a até 1000 vezes por segundo","O Emule lê o mouse cru, sem a aceleração do Windows, e manda a posição ao celular a cada 4 ms. Os movimentos pequenos chegam inteiros."],
+    ["Tudo passa pelo cabo USB","Sem Wi-Fi no meio: vídeo, som e toques vão e voltam pelo cabo. O adb já vem dentro do app, não precisa instalar nada."],
+    ["O toque acontece no seu celular de verdade","O clique vira um toque na posição exata da tela. Teclas, botões do mouse e a rodinha podem virar toques, joystick e modo mira."],
+    ["A placa de vídeo decodifica cada quadro","O celular manda H.264 ou H.265 em resolução nativa, até 60 fps. O PC decodifica por hardware, com fila zero."],
+    ["O quadro vai para a tela na hora","Nada de buffer de vídeo: cada quadro é desenhado assim que fica pronto. O som do celular toca junto, com 25 a 35 ms de buffer típico."]
+  ];
+  var strip=document.querySelector('.strip');
+  var frames=[].slice.call(strip.querySelectorAll('.frame')),cur=0;
+  var cap=document.getElementById('cap'),h=document.getElementById('cap-h'),p=document.getElementById('cap-p');
+  var ph=document.getElementById('playhead'),pos=document.getElementById('pos');
+  var narrow=window.matchMedia('(max-width:760px)');
+  var programmatic=false;
+  function show(i,opts){
+    opts=opts||{};
+    i=(i+frames.length)%frames.length;
+    if(i===cur)return;
+    cur=i;
+    frames.forEach(function(f,j){var on=j===cur;f.setAttribute('aria-selected',on?'true':'false');f.tabIndex=on?0:-1;});
+    h.textContent=C[cur][0];p.textContent=C[cur][1];
+    ph.setAttribute('x',String(cur*200));pos.textContent='Quadro '+(cur+1)+' de 5';
+    cap.classList.remove('cut');void cap.offsetWidth;cap.classList.add('cut');
+    if(opts.focus)frames[cur].focus({preventScroll:true});
+    if(narrow.matches&&!opts.fromScroll){programmatic=true;frames[cur].scrollIntoView({block:'nearest',inline:'center',behavior:'auto'});setTimeout(function(){programmatic=false;},300);}
+  }
+  frames.forEach(function(f,j){f.addEventListener('click',function(){show(j);});});
+  document.getElementById('prev').addEventListener('click',function(){show(cur-1);});
+  document.getElementById('next').addEventListener('click',function(){show(cur+1);});
+  strip.addEventListener('keydown',function(e){
+    var k=e.key,n=null;
+    if(k==='ArrowRight')n=cur+1;else if(k==='ArrowLeft')n=cur-1;else if(k==='Home')n=0;else if(k==='End')n=frames.length-1;
+    if(n!==null){show(n,{focus:true});e.preventDefault();}
+  });
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      if(!narrow.matches||programmatic)return;
+      es.forEach(function(en){if(en.isIntersecting&&en.intersectionRatio>=.6)show(frames.indexOf(en.target),{fromScroll:true});});
+    },{root:strip,threshold:[.6]});
+    frames.forEach(function(f){io.observe(f);});
+  }
+})();
 </script>
 </body>
 </html>
