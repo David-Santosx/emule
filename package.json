@@ -1,0 +1,66 @@
+{
+  "name": "emule",
+  "productName": "Emule",
+  "version": "1.0.0",
+  "description": "Espelhamento de celular Android via USB com baixa latência, áudio e mapeamento de teclado/mouse para jogos.",
+  "main": "src/main/main.js",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "fetch-vendor": "node scripts/fetch-vendor.js",
+    "package": "node scripts/package.js",
+    "dist": "electron-builder --win portable nsis --x64",
+    "make-icon": "electron scripts/make-icon.js",
+    "test": "node --test test/",
+    "postinstall": "node scripts/fetch-vendor.js --if-missing"
+  },
+  "build": {
+    "appId": "app.emule.mirror",
+    "productName": "Emule",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "!**/*.md"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor",
+        "to": "vendor"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    },
+    "portable": {
+      "artifactName": "Emule.exe"
+    },
+    "nsis": {
+      "artifactName": "Emule-Setup-${version}.exe",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Emule"
+    }
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.3.2",
+    "electron-builder": "^26.18.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/David-Santosx/emule.git"
+  },
+  "homepage": "https://david-santosx.github.io/emule/"
+}

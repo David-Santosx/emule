@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# downloaded binaries (adb + scrcpy-server) — run `npm run fetch-vendor`
+vendor/
+
+# build output
+dist/
+release/
+
+# logs / OS
+*.log
+npm-debug.log*
+Thumbs.db
+Desktop.ini
+.DS_Store
